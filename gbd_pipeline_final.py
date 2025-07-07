@@ -307,6 +307,64 @@ class UNHabitatIndicator(Indicator):
         print(f"      ✅ Found {len(df)} records.")
         return df
 
+# --- UNICEF Under-5 Population Indicator ---
+class UNICEFUnder5PopIndicator(Indicator):
+    """Fetches absolute under-5 population counts (0-4 years) from UNICEF SDMX."""
+
+    ENDPOINT = "https://sdmx.data.unicef.org/ws/public/sdmxapi/rest/data/UNICEF,DM,1.0/.DM_POP_U5?format=sdmx-json"
+
+    def __init__(self):
+        super().__init__("Population ages 0-4 (number)", "UNICEF")
+
+    def fetch_data(self, session):
+        print("   Fetching Under-5 population from UNICEF SDMX …")
+        try:
+            resp = session.get(self.ENDPOINT, timeout=90)
+            resp.raise_for_status()
+            payload = resp.json()
+
+            # Build lookup tables for REF_AREA and TIME_PERIOD indices
+            series_dims = payload["data"]["structure"]["dimensions"]["series"]
+            ref_areas = series_dims[0]["values"]  # index 0 is REF_AREA
+            ref_lookup = {str(idx): v["id"] for idx, v in enumerate(ref_areas)}
+
+            time_values = payload["data"]["structure"]["dimensions"]["observation"][0]["values"]
+            time_lookup = {str(idx): int(v["id"]) for idx, v in enumerate(time_values)}
+
+            series_dict = payload["data"]["dataSets"][0]["series"]
+
+            records = []
+            for s_key, s_val in series_dict.items():
+                ref_idx = s_key.split(":")[0]
+                iso3 = ref_lookup.get(ref_idx)
+                if not iso3:
+                    continue
+                for t_idx, obs in s_val["observations"].items():
+                    year = time_lookup.get(t_idx)
+                    if year is None:
+                        continue
+                    value = obs[0]
+                    records.append({"country": iso3, "year": year, "value": value})
+
+            if not records:
+                print("      ⚠️ No records parsed from UNICEF response.")
+                return pd.DataFrame()
+
+            df = pd.DataFrame(records)
+            # Convert ISO3 to short names for consistency
+            try:
+                import country_converter as coco
+                df["country"] = coco.convert(df["country"].tolist(), to="name_short", not_found=np.nan)
+                df.dropna(subset=["country"], inplace=True)
+            except ImportError:
+                pass
+
+            print(f"      ✅ Parsed {len(df)} UNICEF under-5 records.")
+            return df
+        except Exception as e:
+            print(f"      ❌ ERROR fetching UNICEF U5 population: {e}")
+            return pd.DataFrame()
+
 # --- Data Processing Functions ---
 
 def get_dhs_country_list():
@@ -402,9 +460,8 @@ def run_complete_pipeline():
         UNHabitatIndicator(),
         WorldBankIndicator('EN.POP.SLUM.UR.ZS', 'Urban slum population (% of urban)'),
 
-        # --- Population Data (for template) ---
-        WorldBankIndicator('SP.POP.TOTL', 'Total Population'),
-        WorldBankIndicator('SP.POP.0004.TO.ZS', 'Population ages 0-4 (% of total)'),
+        # --- Population Data (absolute counts 0-4) ---
+        UNICEFUnder5PopIndicator(),
     ]
 
     all_dfs = []
@@ -437,21 +494,18 @@ def run_complete_pipeline():
     # Pool data from duplicate sources
     consolidated_df = pool_duplicate_sources(consolidated_df)
 
-    # Separate population data from risk factor data
-    pop_indicators = ['Population ages 0-4 (% of total)', 'Total Population']
+    # Separate population data from risk factor data (only absolute under-5 counts)
+    pop_indicators = ['Population ages 0-4 (number)']
     population_data = consolidated_df[consolidated_df['risk_factor'].isin(pop_indicators)].copy()
     risk_factor_data = consolidated_df[~consolidated_df['risk_factor'].isin(pop_indicators)].copy()
     
-    # Calculate under 5 population
-    pop_percent = population_data[population_data['risk_factor'] == 'Population ages 0-4 (% of total)']
-    pop_total = population_data[population_data['risk_factor'] == 'Total Population']
-    
-    merged_pop = pd.merge(pop_percent, pop_total, on=['country', 'year'], suffixes=('_pct', '_total'))
-    merged_pop['under_5_population'] = (merged_pop['value_pct'] / 100) * merged_pop['value_total']
-    
-    # Get the latest population data for each country
-    latest_pop = merged_pop.sort_values('year', ascending=False).drop_duplicates('country')
-    population_output = latest_pop[['country', 'year', 'under_5_population']]
+    # Already have absolute counts; just take latest year per country
+    latest_pop = (
+        population_data
+        .sort_values('year', ascending=False)
+        .drop_duplicates('country')
+    )
+    population_output = latest_pop[['country', 'year', 'value']].rename(columns={'value': 'under_5_population'})
     
     print(f"   ✅ Processed population data for {len(population_output)} countries.")
 
