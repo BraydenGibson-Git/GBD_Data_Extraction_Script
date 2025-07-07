@@ -25,7 +25,7 @@ Provide a single-command, reproducible pipeline that assembles a complete **GBD 
 | Feeding | Exclusive breastfeeding <6 months | WHO-GHO |
 | Household | Solid fuel use | World Bank |
 | Mortality | U5MR | World Bank |
-| Population | Total & 0-14 population | World Bank |
+| Population | Population ages 0-4 (absolute) | UNICEF SDMX |
 
 ## Imputation hierarchy
 1. Latest country-specific value (direct).
@@ -53,9 +53,10 @@ Outputs:
 
 | Source | Endpoint / Product | Indicators Used | Access Method | Citation |
 |--------|--------------------|-----------------|---------------|----------|
-| World Bank HNP API | `/country/all/indicator/SH.STA.MALN.ZS` etc. | Malnutrition, Low birth weight, Solid fuel use, Total population, Population 0-14, U5MR | `requests` JSON pagination | World Bank. Health Nutrition and Population Statistics. https://data.worldbank.org |
+| World Bank HNP API | `/country/all/indicator/SH.STA.MALN.ZS` etc. | Malnutrition, Low birth weight, Solid fuel use, Total population, U5MR | `requests` JSON pagination | World Bank. Health Nutrition and Population Statistics. https://data.worldbank.org |
 | WHO GHO OData | `https://ghoapi.azureedge.net/api/{code}` | Wasting prevalence, Exclusive breastfeeding | `requests` with OData `$format=json` | World Health Organization. Global Health Observatory. https://www.who.int/data/gho |
 | UN IGME (via WB) | Indirectly via WB U5MR series | Under-5 mortality rate (SDG 3.2.1) | Same as WB call above | United Nations Inter-agency Group for Child Mortality Estimation, 2024 |
+| UNICEF SDMX API | `https://sdmx.data.unicef.org/ws/public/sdmxapi/rest/data/UNICEF,DM,1.0/.DM_POP_U5` | Population ages 0-4 (absolute counts) | `requests` (SDMX-JSON) | UNICEF. Demography – Population under age 5. https://data.unicef.org |
 | Master template | Provided file `Master Spreadsheet (DO NOT CHANGE YET).xls` | Baseline countries + columns | `xlrd` | --- |
 
 All data were retrieved on **8 July 2025**.
