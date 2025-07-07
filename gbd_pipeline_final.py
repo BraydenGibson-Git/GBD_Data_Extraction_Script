@@ -28,6 +28,7 @@ import warnings
 import os
 from urllib.parse import quote
 from gbd_enhanced_template_populator import EnhancedTemplatePopulator
+from tqdm import tqdm
 warnings.filterwarnings('ignore')
 
 # ===== DATA EXTRACTION MODULES =====
@@ -347,17 +348,35 @@ class ChildMortalityExtractor:
         self.base_url = "https://ghoapi.azureedge.net/api/MDG_0000000007"
         
     def extract_under_five_mortality(self):
-        print(" MORTALITY DATA EXTRACTION ")
+        print("\n MORTALITY DATA EXTRACTION ")
         print("   🌍 Extracting WHO Under-Five Mortality Rate data...")
         try:
-            response = requests.get(self.base_url, timeout=60)
-            if response.status_code == 200:
-                records = self._parse_gho_data(response.json())
-                print(f"      ✅ {len(records)} child mortality records extracted.")
-                return pd.DataFrame(records)
-            else:
-                print(f"      ❌ HTTP Error {response.status_code}")
-                return pd.DataFrame()
+            # Use streaming to handle large response and add progress bar
+            response = requests.get(self.base_url, stream=True, timeout=60)
+            response.raise_for_status() # Raise an exception for bad status codes
+
+            total_size = int(response.headers.get('content-length', 0))
+            block_size = 1024 # 1 Kibibyte
+            
+            progress_bar = tqdm(total=total_size, unit='iB', unit_scale=True, desc="   Downloading U5MR Data")
+            
+            content = b''
+            for data in response.iter_content(block_size):
+                progress_bar.update(len(data))
+                content += data
+            progress_bar.close()
+
+            if total_size != 0 and progress_bar.n != total_size:
+                print("      ⚠️  WARNING: Downloaded size does not match content length.")
+
+            print("      ⏳ Parsing downloaded data...")
+            records = self._parse_gho_data(json.loads(content))
+            print(f"      ✅ {len(records)} child mortality records extracted.")
+            return pd.DataFrame(records)
+
+        except requests.exceptions.RequestException as e:
+            print(f"      ❌ HTTP Error: {e}")
+            return pd.DataFrame()
         except Exception as e:
             print(f"      ❌ An error occurred: {e}")
             return pd.DataFrame()
