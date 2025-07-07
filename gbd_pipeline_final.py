@@ -487,6 +487,9 @@ def run_complete_pipeline():
     consolidated_df = pd.concat(all_dfs, ignore_index=True)
     print(f"   Total records fetched: {len(consolidated_df)}")
 
+    # --- Ensure country column is hashable (no list objects) ---
+    consolidated_df['country'] = consolidated_df['country'].apply(lambda x: x[0] if isinstance(x, list) else x)
+
     # Data Cleaning and Standardization
     consolidated_df.dropna(subset=['country', 'year', 'value'], inplace=True)
     consolidated_df['year'] = pd.to_numeric(consolidated_df['year']).astype(int)
