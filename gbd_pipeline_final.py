@@ -343,7 +343,7 @@ class UNICEFUnder5PopIndicator(Indicator):
                     year = time_lookup.get(t_idx)
                     if year is None:
                         continue
-                    value = obs[0]
+                    value = obs[0] * 1000  # API returns thousands of persons
                     records.append({"country": iso3, "year": year, "value": value})
 
             if not records:
