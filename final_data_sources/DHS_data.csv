@@ -1,0 +1,244 @@
+risk_factor,country,year,value,confidence_intervals,sample_size,source
+Malnutrition (wght-for-age z<-2),Albania,2008,19.3,,,DHS
+Malnutrition (wght-for-age z<-2),Albania,2017,11.3,,,DHS
+Malnutrition (wght-for-age z<-2),Armenia,2005,17.9,,,DHS
+Malnutrition (wght-for-age z<-2),Armenia,2010,19.3,,,DHS
+Malnutrition (wght-for-age z<-2),Armenia,2016,9.4,,,DHS
+Malnutrition (wght-for-age z<-2),Angola,2015,37.6,,,DHS
+Malnutrition (wght-for-age z<-2),Azerbaijan,2006,25.1,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,1997,60.1,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2000,51.1,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2004,50.6,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2007,43.2,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2011,41.3,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2014,36.1,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2017,30.8,,,DHS
+Malnutrition (wght-for-age z<-2),Bangladesh,2022,23.6,,,DHS
+Malnutrition (wght-for-age z<-2),Burkina Faso,1993,38.8,,,DHS
+Malnutrition (wght-for-age z<-2),Burkina Faso,1999,41.4,,,DHS
+Malnutrition (wght-for-age z<-2),Burkina Faso,2003,43.4,,,DHS
+Malnutrition (wght-for-age z<-2),Burkina Faso,2010,34.6,,,DHS
+Malnutrition (wght-for-age z<-2),Burkina Faso,2021,22.6,,,DHS
+Malnutrition (wght-for-age z<-2),Benin,1996,32.5,,,DHS
+Malnutrition (wght-for-age z<-2),Benin,2001,36.2,,,DHS
+Malnutrition (wght-for-age z<-2),Benin,2006,43.1,,,DHS
+Malnutrition (wght-for-age z<-2),Benin,2017,32.2,,,DHS
+Malnutrition (wght-for-age z<-2),Bolivia,1994,34.2,,,DHS
+Malnutrition (wght-for-age z<-2),Bolivia,1998,32.7,,,DHS
+Malnutrition (wght-for-age z<-2),Bolivia,2003,32.3,,,DHS
+Malnutrition (wght-for-age z<-2),Bolivia,2008,27.1,,,DHS
+Malnutrition (wght-for-age z<-2),Brazil,1996,12.9,,,DHS
+Malnutrition (wght-for-age z<-2),Burundi,2010,57.7,,,DHS
+Malnutrition (wght-for-age z<-2),Burundi,2016,55.9,,,DHS
+Malnutrition (wght-for-age z<-2),Congo Democratic Republic,2007,45.5,,,DHS
+Malnutrition (wght-for-age z<-2),Congo Democratic Republic,2013,42.7,,,DHS
+Malnutrition (wght-for-age z<-2),Central African Republic,1994,39.1,,,DHS
+Malnutrition (wght-for-age z<-2),Congo,2005,30.8,,,DHS
+Malnutrition (wght-for-age z<-2),Congo,2011,24.4,,,DHS
+Malnutrition (wght-for-age z<-2),Cote d'Ivoire,1994,30.7,,,DHS
+Malnutrition (wght-for-age z<-2),Cote d'Ivoire,1998,31.0,,,DHS
+Malnutrition (wght-for-age z<-2),Cote d'Ivoire,2012,29.8,,,DHS
+Malnutrition (wght-for-age z<-2),Cote d'Ivoire,2021,23.4,,,DHS
+Malnutrition (wght-for-age z<-2),Cameroon,1991,31.3,,,DHS
+Malnutrition (wght-for-age z<-2),Cameroon,1998,36.2,,,DHS
+Malnutrition (wght-for-age z<-2),Cameroon,2004,35.3,,,DHS
+Malnutrition (wght-for-age z<-2),Cameroon,2011,32.5,,,DHS
+Malnutrition (wght-for-age z<-2),Cameroon,2018,28.9,,,DHS
+Malnutrition (wght-for-age z<-2),Colombia,1995,19.6,,,DHS
+Malnutrition (wght-for-age z<-2),Colombia,2010,13.2,,,DHS
+Malnutrition (wght-for-age z<-2),Dominican Republic,1991,21.0,,,DHS
+Malnutrition (wght-for-age z<-2),Dominican Republic,1996,13.5,,,DHS
+Malnutrition (wght-for-age z<-2),Dominican Republic,2002,11.4,,,DHS
+Malnutrition (wght-for-age z<-2),Dominican Republic,2007,9.8,,,DHS
+Malnutrition (wght-for-age z<-2),Dominican Republic,2013,6.9,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,1992,30.6,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,1995,33.7,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,2000,23.4,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,2003,19.8,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,2005,22.9,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,2008,28.9,,,DHS
+Malnutrition (wght-for-age z<-2),Egypt,2014,21.4,,,DHS
+Malnutrition (wght-for-age z<-2),Eritrea,1995,44.4,,,DHS
+Malnutrition (wght-for-age z<-2),Eritrea,2002,42.9,,,DHS
+Malnutrition (wght-for-age z<-2),Ethiopia,2000,57.7,,,DHS
+Malnutrition (wght-for-age z<-2),Ethiopia,2005,50.8,,,DHS
+Malnutrition (wght-for-age z<-2),Ethiopia,2011,44.4,,,DHS
+Malnutrition (wght-for-age z<-2),Ethiopia,2016,38.4,,,DHS
+Malnutrition (wght-for-age z<-2),Ethiopia,2019,36.8,,,DHS
+Malnutrition (wght-for-age z<-2),Gabon,2000,25.1,,,DHS
+Malnutrition (wght-for-age z<-2),Gabon,2012,16.5,,,DHS
+Malnutrition (wght-for-age z<-2),Gabon,2019,14.4,,,DHS
+Malnutrition (wght-for-age z<-2),Ghana,1993,32.5,,,DHS
+Malnutrition (wght-for-age z<-2),Ghana,1998,30.6,,,DHS
+Malnutrition (wght-for-age z<-2),Ghana,2008,28.0,,,DHS
+Malnutrition (wght-for-age z<-2),Ghana,2014,18.8,,,DHS
+Malnutrition (wght-for-age z<-2),Ghana,2022,17.4,,,DHS
+Malnutrition (wght-for-age z<-2),Gambia,2013,24.5,,,DHS
+Malnutrition (wght-for-age z<-2),Gambia,2019,17.5,,,DHS
+Malnutrition (wght-for-age z<-2),Guinea,1999,30.5,,,DHS
+Malnutrition (wght-for-age z<-2),Guinea,2005,39.3,,,DHS
+Malnutrition (wght-for-age z<-2),Guinea,2012,31.2,,,DHS
+Malnutrition (wght-for-age z<-2),Guinea,2018,30.3,,,DHS
+Malnutrition (wght-for-age z<-2),Guatemala,1995,55.2,,,DHS
+Malnutrition (wght-for-age z<-2),Guatemala,1999,53.1,,,DHS
+Malnutrition (wght-for-age z<-2),Guatemala,2015,46.5,,,DHS
+Malnutrition (wght-for-age z<-2),Guyana,2009,18.2,,,DHS
+Malnutrition (wght-for-age z<-2),Honduras,2005,30.0,,,DHS
+Malnutrition (wght-for-age z<-2),Honduras,2011,22.6,,,DHS
+Malnutrition (wght-for-age z<-2),Haiti,1994,36.7,,,DHS
+Malnutrition (wght-for-age z<-2),Haiti,2000,28.7,,,DHS
+Malnutrition (wght-for-age z<-2),Haiti,2006,29.4,,,DHS
+Malnutrition (wght-for-age z<-2),Haiti,2012,21.9,,,DHS
+Malnutrition (wght-for-age z<-2),Haiti,2016,21.9,,,DHS
+Malnutrition (wght-for-age z<-2),India,1999,51.5,,,DHS
+Malnutrition (wght-for-age z<-2),India,2006,48.0,,,DHS
+Malnutrition (wght-for-age z<-2),India,2015,38.4,,,DHS
+Malnutrition (wght-for-age z<-2),India,2020,35.5,,,DHS
+Malnutrition (wght-for-age z<-2),Jordan,1997,11.0,,,DHS
+Malnutrition (wght-for-age z<-2),Jordan,2002,11.5,,,DHS
+Malnutrition (wght-for-age z<-2),Jordan,2009,8.0,,,DHS
+Malnutrition (wght-for-age z<-2),Jordan,2012,7.7,,,DHS
+Malnutrition (wght-for-age z<-2),Jordan,2023,8.3,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,1993,39.9,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,1998,37.7,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,2003,35.7,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,2008,35.3,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,2014,26.0,,,DHS
+Malnutrition (wght-for-age z<-2),Kenya,2022,17.6,,,DHS
+Malnutrition (wght-for-age z<-2),Cambodia,2000,49.8,,,DHS
+Malnutrition (wght-for-age z<-2),Cambodia,2005,42.7,,,DHS
+Malnutrition (wght-for-age z<-2),Cambodia,2010,39.9,,,DHS
+Malnutrition (wght-for-age z<-2),Cambodia,2014,32.4,,,DHS
+Malnutrition (wght-for-age z<-2),Cambodia,2021,21.9,,,DHS
+Malnutrition (wght-for-age z<-2),Kazakhstan,1995,18.6,,,DHS
+Malnutrition (wght-for-age z<-2),Kazakhstan,1999,12.8,,,DHS
+Malnutrition (wght-for-age z<-2),Comoros,1996,38.1,,,DHS
+Malnutrition (wght-for-age z<-2),Comoros,2012,30.1,,,DHS
+Malnutrition (wght-for-age z<-2),Kyrgyz Republic,1997,32.4,,,DHS
+Malnutrition (wght-for-age z<-2),Kyrgyz Republic,2012,17.7,,,DHS
+Malnutrition (wght-for-age z<-2),Liberia,2007,39.4,,,DHS
+Malnutrition (wght-for-age z<-2),Liberia,2013,31.6,,,DHS
+Malnutrition (wght-for-age z<-2),Liberia,2019,29.8,,,DHS
+Malnutrition (wght-for-age z<-2),Lesotho,2009,39.2,,,DHS
+Malnutrition (wght-for-age z<-2),Lesotho,2014,33.2,,,DHS
+Malnutrition (wght-for-age z<-2),Lesotho,2023,35.6,,,DHS
+Malnutrition (wght-for-age z<-2),Morocco,1992,29.9,,,DHS
+Malnutrition (wght-for-age z<-2),Morocco,2003,22.4,,,DHS
+Malnutrition (wght-for-age z<-2),Moldova,2005,10.2,,,DHS
+Malnutrition (wght-for-age z<-2),Madagascar,1992,60.4,,,DHS
+Malnutrition (wght-for-age z<-2),Madagascar,1997,55.0,,,DHS
+Malnutrition (wght-for-age z<-2),Madagascar,2004,53.2,,,DHS
+Malnutrition (wght-for-age z<-2),Madagascar,2008,50.1,,,DHS
+Malnutrition (wght-for-age z<-2),Madagascar,2021,39.8,,,DHS
+Malnutrition (wght-for-age z<-2),Mali,1996,36.0,,,DHS
+Malnutrition (wght-for-age z<-2),Mali,2001,42.4,,,DHS
+Malnutrition (wght-for-age z<-2),Mali,2006,37.7,,,DHS
+Malnutrition (wght-for-age z<-2),Mali,2012,38.3,,,DHS
+Malnutrition (wght-for-age z<-2),Mali,2018,26.9,,,DHS
+Malnutrition (wght-for-age z<-2),Myanmar,2016,29.2,,,DHS
+Malnutrition (wght-for-age z<-2),Mauritania,2000,38.9,,,DHS
+Malnutrition (wght-for-age z<-2),Mauritania,2020,25.8,,,DHS
+Malnutrition (wght-for-age z<-2),Maldives,2009,18.9,,,DHS
+Malnutrition (wght-for-age z<-2),Maldives,2016,15.3,,,DHS
+Malnutrition (wght-for-age z<-2),Malawi,1992,55.2,,,DHS
+Malnutrition (wght-for-age z<-2),Malawi,2000,54.6,,,DHS
+Malnutrition (wght-for-age z<-2),Malawi,2004,52.5,,,DHS
+Malnutrition (wght-for-age z<-2),Malawi,2010,47.1,,,DHS
+Malnutrition (wght-for-age z<-2),Malawi,2015,37.1,,,DHS
+Malnutrition (wght-for-age z<-2),Mozambique,1997,42.4,,,DHS
+Malnutrition (wght-for-age z<-2),Mozambique,2003,47.0,,,DHS
+Malnutrition (wght-for-age z<-2),Mozambique,2011,42.6,,,DHS
+Malnutrition (wght-for-age z<-2),Mozambique,2022,36.7,,,DHS
+Malnutrition (wght-for-age z<-2),Nicaragua,1998,30.2,,,DHS
+Malnutrition (wght-for-age z<-2),Nicaragua,2001,24.9,,,DHS
+Malnutrition (wght-for-age z<-2),Nigeria,1990,48.7,,,DHS
+Malnutrition (wght-for-age z<-2),Nigeria,2003,42.4,,,DHS
+Malnutrition (wght-for-age z<-2),Nigeria,2008,40.6,,,DHS
+Malnutrition (wght-for-age z<-2),Nigeria,2013,36.8,,,DHS
+Malnutrition (wght-for-age z<-2),Nigeria,2018,36.8,,,DHS
+Malnutrition (wght-for-age z<-2),Niger,1992,45.2,,,DHS
+Malnutrition (wght-for-age z<-2),Niger,1998,46.5,,,DHS
+Malnutrition (wght-for-age z<-2),Niger,2006,54.8,,,DHS
+Malnutrition (wght-for-age z<-2),Niger,2012,43.9,,,DHS
+Malnutrition (wght-for-age z<-2),Namibia,1992,34.8,,,DHS
+Malnutrition (wght-for-age z<-2),Namibia,2000,29.0,,,DHS
+Malnutrition (wght-for-age z<-2),Namibia,2006,29.0,,,DHS
+Malnutrition (wght-for-age z<-2),Namibia,2013,23.7,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,1996,56.6,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,2001,57.2,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,2006,49.3,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,2011,40.5,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,2016,35.8,,,DHS
+Malnutrition (wght-for-age z<-2),Nepal,2022,24.8,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,1992,37.1,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,1996,31.5,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2004,29.3,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2007,27.8,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2009,23.8,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2010,23.3,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2011,19.5,,,DHS
+Malnutrition (wght-for-age z<-2),Peru,2012,18.1,,,DHS
+Malnutrition (wght-for-age z<-2),Pakistan,1991,54.3,,,DHS
+Malnutrition (wght-for-age z<-2),Pakistan,2012,44.8,,,DHS
+Malnutrition (wght-for-age z<-2),Pakistan,2017,37.6,,,DHS
+Malnutrition (wght-for-age z<-2),Paraguay,1990,18.3,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,1992,56.8,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,2000,48.3,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,2005,51.1,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,2010,44.2,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,2015,37.9,,,DHS
+Malnutrition (wght-for-age z<-2),Rwanda,2019,33.1,,,DHS
+Malnutrition (wght-for-age z<-2),Sierra Leone,2008,36.4,,,DHS
+Malnutrition (wght-for-age z<-2),Sierra Leone,2013,37.9,,,DHS
+Malnutrition (wght-for-age z<-2),Sierra Leone,2019,29.5,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,1993,29.5,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2005,19.6,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2010,26.5,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2012,18.7,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2014,18.7,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2015,20.5,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2016,17.0,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2017,16.5,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2018,18.8,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2019,17.9,,,DHS
+Malnutrition (wght-for-age z<-2),Senegal,2023,17.5,,,DHS
+Malnutrition (wght-for-age z<-2),Sao Tome and Principe,2008,29.3,,,DHS
+Malnutrition (wght-for-age z<-2),Eswatini,2006,28.9,,,DHS
+Malnutrition (wght-for-age z<-2),Chad,1997,44.5,,,DHS
+Malnutrition (wght-for-age z<-2),Chad,2014,39.9,,,DHS
+Malnutrition (wght-for-age z<-2),Togo,1998,28.7,,,DHS
+Malnutrition (wght-for-age z<-2),Togo,2013,27.5,,,DHS
+Malnutrition (wght-for-age z<-2),Tajikistan,2012,26.2,,,DHS
+Malnutrition (wght-for-age z<-2),Tajikistan,2017,17.5,,,DHS
+Malnutrition (wght-for-age z<-2),Timor-Leste,2009,58.1,,,DHS
+Malnutrition (wght-for-age z<-2),Timor-Leste,2016,45.6,,,DHS
+Malnutrition (wght-for-age z<-2),Turkey,1993,23.4,,,DHS
+Malnutrition (wght-for-age z<-2),Turkey,1998,18.8,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,1992,50.0,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,1996,49.5,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,1999,48.2,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,2004,44.3,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,2010,42.0,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,2015,34.4,,,DHS
+Malnutrition (wght-for-age z<-2),Tanzania,2022,30.0,,,DHS
+Malnutrition (wght-for-age z<-2),Uganda,1995,45.0,,,DHS
+Malnutrition (wght-for-age z<-2),Uganda,2000,44.8,,,DHS
+Malnutrition (wght-for-age z<-2),Uganda,2006,38.1,,,DHS
+Malnutrition (wght-for-age z<-2),Uganda,2011,33.4,,,DHS
+Malnutrition (wght-for-age z<-2),Uganda,2016,28.9,,,DHS
+Malnutrition (wght-for-age z<-2),Uzbekistan,1996,34.9,,,DHS
+Malnutrition (wght-for-age z<-2),Yemen,1991,49.2,,,DHS
+Malnutrition (wght-for-age z<-2),Yemen,1997,56.4,,,DHS
+Malnutrition (wght-for-age z<-2),Yemen,2013,46.5,,,DHS
+Malnutrition (wght-for-age z<-2),South Africa,2016,27.4,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,1992,46.4,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,1996,48.5,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,2002,52.5,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,2007,45.4,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,2013,40.1,,,DHS
+Malnutrition (wght-for-age z<-2),Zambia,2018,34.6,,,DHS
+Malnutrition (wght-for-age z<-2),Zimbabwe,1994,28.6,,,DHS
+Malnutrition (wght-for-age z<-2),Zimbabwe,1999,33.6,,,DHS
+Malnutrition (wght-for-age z<-2),Zimbabwe,2005,34.6,,,DHS
+Malnutrition (wght-for-age z<-2),Zimbabwe,2010,32.0,,,DHS
+Malnutrition (wght-for-age z<-2),Zimbabwe,2015,26.8,,,DHS
