@@ -158,7 +158,7 @@ class EnhancedTemplatePopulator:
         
         print(f"   📂 Reading data from {gbd_data_file}...")
         gbd_data = pd.read_excel(gbd_data_file, sheet_name='RiskFactors_Mortality')
-        population_df = pd.read_excel(gbd_data_file, sheet_name='Under14_Population')
+        population_df = pd.read_excel(gbd_data_file, sheet_name='Under5_Population')
         
         # --- Normalize all country names at the beginning ---
         gbd_data = self._normalize_country_names(gbd_data, 'country')
@@ -172,7 +172,7 @@ class EnhancedTemplatePopulator:
         master_df.rename(columns={master_df.columns[0]: 'Country'}, inplace=True)
         master_df = self._normalize_country_names(master_df, 'Country')
 
-        pop_dict = population_df.set_index('country')['under_14_population'].to_dict()
+        pop_dict = population_df.set_index('country')['under_5_population'].to_dict()
 
         risk_factor_mapping = {
             'Malnutrition (wght-for-age z<-2)': 'Malnutrition',
@@ -180,6 +180,7 @@ class EnhancedTemplatePopulator:
             'Low birth weight (=<2500 g)': 'Low_Birth_Weight',
             'Exclusive breastfeeding under 6 months (%)': 'Exclusive_Breastfeeding',
             'Use solid fuels (yes)': 'Solid_Fuels',
+            'Urban slum population (% of urban)': 'Crowding',
             'Child Mortality Rate (U5MR)': 'U5MR'
         }
         
@@ -197,7 +198,7 @@ class EnhancedTemplatePopulator:
             original_pop = row.get('U5_Population', np.nan) 
             new_pop = pop_dict.get(country_name, original_pop)
 
-            row_data = {'Country': country_name, 'Sub_Region': sub_region, 'Population_0_14': new_pop}
+            row_data = {'Country': country_name, 'Sub_Region': sub_region, 'Population_0_4': new_pop}
             
             for gbd_risk_factor, clean_name in risk_factor_mapping.items():
                 result = self._get_imputation_value(country_name, gbd_risk_factor, gbd_data)

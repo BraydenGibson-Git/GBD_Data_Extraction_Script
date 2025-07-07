@@ -32,6 +32,7 @@ from tqdm import tqdm
 from datetime import datetime
 import numpy as np
 import gbd_enhanced_template_populator
+import tempfile, hashlib
 
 # Suppress pandas SettingWithCopy warnings that arise during in-place normalisation
 from pandas.errors import SettingWithCopyWarning
@@ -190,6 +191,122 @@ class DHSIndicator(Indicator):
         print(f"      ✅ Found {len(df)} total records from DHS.")
         return df
 
+# --- UN-Habitat Indicator Class ---
+class UNHabitatIndicator(Indicator):
+    """Crowding indicator from UN-Habitat (SDG 11.1.1 component).
+
+    Data source: HDX dataset "Access to basic services in cities and urban areas".
+    The file contains column `Sufficient living area (%)`; we convert to
+    overcrowding percentage = 100 – sufficient.
+    """
+
+    DATASET_SLUG = "basic-services"  # HDX dataset slug on HDX
+    RESOURCE_NAME_KEYWORDS = [
+        "access_to_basic_services",  # appears in file name on HDX
+        "basic_services", "living_area"]
+
+    def __init__(self, name: str = "Crowding (% lacking sufficient living area)"):
+        super().__init__(name, "UN-Habitat")
+
+    @staticmethod
+    def _find_resource(download_meta):
+        """Pick the first resource URL that looks like the CSV we need."""
+        for res in download_meta.get("resources", []):
+            title = (res.get("name") or "") + " " + (res.get("description") or "")
+            fn = res.get("url") or res.get("download_url")
+            if fn and any(k in title.lower() or k in fn.lower() for k in UNHabitatIndicator.RESOURCE_NAME_KEYWORDS):
+                return fn
+        return None
+
+    def _download_file(self) -> str:
+        """Download the dataset resource (CSV or XLSX) to a temp file and return the path."""
+        api_url = f"https://data.humdata.org/api/3/action/package_show?id={self.DATASET_SLUG}"
+        try:
+            meta = requests.get(api_url, timeout=45).json()
+            if not meta.get("success"):
+                raise ValueError("HDX API did not return success flag")
+            resource_url = self._find_resource(meta["result"])
+            if not resource_url:
+                raise ValueError("Could not locate suitable resource in HDX dataset")
+            raw_bytes = requests.get(resource_url, timeout=90).content
+            ext = ".xlsx" if resource_url.lower().endswith("xlsx") else ".csv"
+            fp = os.path.join(tempfile.gettempdir(), hashlib.md5(resource_url.encode()).hexdigest() + ext)
+            with open(fp, "wb") as f:
+                f.write(raw_bytes)
+            return fp
+        except Exception as e:
+            print(f"      ❌ ERROR fetching UN-Habitat dataset: {e}")
+            return ""
+
+    def fetch_data(self, session):
+        print(f"   Fetching {self.name} from UN-Habitat HDX…")
+        file_path = self._download_file()
+        if not file_path or not os.path.exists(file_path):
+            return pd.DataFrame()
+        try:
+            if file_path.endswith(".csv"):
+                df = pd.read_csv(file_path, low_memory=False)
+            else:
+                # The XLSX file has two sheets; data is in '2-Data'. The first ~11 rows are metadata.
+                # We'll let pandas figure out header by auto-detection: find the row with 'Country / Territor'
+                tmp_df = pd.read_excel(file_path, sheet_name="2-Data", header=None)
+                header_row_idx = tmp_df.apply(lambda r: r.astype(str).str.contains("Sufficient living area", case=False, na=False).any(), axis=1)
+                header_indices = header_row_idx[header_row_idx].index
+                if len(header_indices):
+                    idx = header_indices[0]
+                    tmp_df.columns = tmp_df.iloc[idx]
+                    df = tmp_df.drop(index=range(0, idx+1))
+                else:
+                    df = tmp_df
+        except Exception as e:
+            print(f"      ❌ ERROR reading UN-Habitat file: {e}")
+            return pd.DataFrame()
+
+        # Expect columns: Country, Year, Sufficient living area (%)
+        # Keep numeric rows only
+        if "Sufficient living area (%)" not in df.columns:
+            # Try alternative column naming – some columns may be non-string
+            suff_cols = [c for c in df.columns if isinstance(c, str) and "sufficient" in c.lower() and "%" in c]
+            if not suff_cols:
+                print("      ⚠️ Column with sufficient living area not found.")
+                return pd.DataFrame()
+            target_col = suff_cols[0]
+        else:
+            target_col = "Sufficient living area (%)"
+
+        df = df.rename(columns={target_col: "sufficient"})
+        # Convert to numeric
+        df["sufficient"] = pd.to_numeric(df["sufficient"], errors="coerce")
+        df.dropna(subset=["sufficient"], inplace=True)
+
+        # Overcrowding percentage
+        df["value"] = 100 - df["sufficient"]
+
+        # Dynamically detect country & year column names
+        country_cols = [c for c in df.columns if isinstance(c,str) and "country" in c.lower() and "name" in c.lower()]
+        if not country_cols:
+            country_cols = [c for c in df.columns if isinstance(c,str) and "country" in c.lower()]
+        year_cols = [c for c in df.columns if isinstance(c,str) and "year" in c.lower()]
+        if not country_cols or not year_cols:
+            print("      ⚠️ Could not locate country/year columns in UN-Habitat data.")
+            return pd.DataFrame()
+        df.rename(columns={country_cols[0]: "country", year_cols[0]: "year"}, inplace=True)
+
+        # Keep only needed cols
+        df = df[["country", "year", "value"]]
+
+        # Normalise country names
+        try:
+            import country_converter as coco, numpy as np
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                df["country"] = coco.convert(names=df["country"].tolist(), to="name_short", not_found=np.nan)
+            df.dropna(subset=["country"], inplace=True)
+        except ImportError:
+            pass
+
+        print(f"      ✅ Found {len(df)} records.")
+        return df
+
 # --- Data Processing Functions ---
 
 def get_dhs_country_list():
@@ -281,9 +398,13 @@ def run_complete_pipeline():
         # --- Child Mortality (for stratification) ---
         WorldBankIndicator('SH.DYN.MORT', 'Child Mortality Rate (U5MR)'),
 
+        # --- Crowding & Housing ---
+        UNHabitatIndicator(),
+        WorldBankIndicator('EN.POP.SLUM.UR.ZS', 'Urban slum population (% of urban)'),
+
         # --- Population Data (for template) ---
         WorldBankIndicator('SP.POP.TOTL', 'Total Population'),
-        WorldBankIndicator('SP.POP.0014.TO.ZS', 'Population ages 0-14 (% of total)'),
+        WorldBankIndicator('SP.POP.0004.TO.ZS', 'Population ages 0-4 (% of total)'),
     ]
 
     all_dfs = []
@@ -317,20 +438,20 @@ def run_complete_pipeline():
     consolidated_df = pool_duplicate_sources(consolidated_df)
 
     # Separate population data from risk factor data
-    pop_indicators = ['Population ages 0-14 (% of total)', 'Total Population']
+    pop_indicators = ['Population ages 0-4 (% of total)', 'Total Population']
     population_data = consolidated_df[consolidated_df['risk_factor'].isin(pop_indicators)].copy()
     risk_factor_data = consolidated_df[~consolidated_df['risk_factor'].isin(pop_indicators)].copy()
     
-    # Calculate under 14 population
-    pop_percent = population_data[population_data['risk_factor'] == 'Population ages 0-14 (% of total)']
+    # Calculate under 5 population
+    pop_percent = population_data[population_data['risk_factor'] == 'Population ages 0-4 (% of total)']
     pop_total = population_data[population_data['risk_factor'] == 'Total Population']
     
     merged_pop = pd.merge(pop_percent, pop_total, on=['country', 'year'], suffixes=('_pct', '_total'))
-    merged_pop['under_14_population'] = (merged_pop['value_pct'] / 100) * merged_pop['value_total']
+    merged_pop['under_5_population'] = (merged_pop['value_pct'] / 100) * merged_pop['value_total']
     
     # Get the latest population data for each country
     latest_pop = merged_pop.sort_values('year', ascending=False).drop_duplicates('country')
-    population_output = latest_pop[['country', 'year', 'under_14_population']]
+    population_output = latest_pop[['country', 'year', 'under_5_population']]
     
     print(f"   ✅ Processed population data for {len(population_output)} countries.")
 
@@ -340,7 +461,7 @@ def run_complete_pipeline():
     print(f"\n💾 Saving consolidated data to '{consolidated_output_file}'...")
     with pd.ExcelWriter(consolidated_output_file) as writer:
         risk_factor_data.to_excel(writer, sheet_name='RiskFactors_Mortality', index=False)
-        population_output.to_excel(writer, sheet_name='Under14_Population', index=False)
+        population_output.to_excel(writer, sheet_name='Under5_Population', index=False)
     print("   ✅ Excel file with risk factors & population saved.")
 
     # --- Progress checkpoint #3 ---
@@ -404,21 +525,21 @@ def run_complete_pipeline():
         .fillna(tidy_df["country"].map(region_helper.country_to_region))
     )
 
-    # 4. Append latest population (absolute 0-14) column
+    # 4. Append latest population (absolute 0-4) column
     pop_latest = (
         population_output.rename(
-            columns={"country": "country", "under_14_population": "Population_0_14"}
-        )[["country", "Population_0_14"]]
+            columns={"country": "country", "under_5_population": "Population_0_4"}
+        )[["country", "Population_0_4"]]
     )
     tidy_df = tidy_df.merge(pop_latest, on="country", how="left")
 
     # 5. Remove rows where *all* risk-factor cols are NaN
-    value_cols = tidy_df.columns.difference(["country", "Sub_Region", "Population_0_14"])
+    value_cols = tidy_df.columns.difference(["country", "Sub_Region", "Population_0_4"])
     tidy_df = tidy_df.dropna(subset=value_cols, how="all")
 
     # 6. Standardise column order and names
     tidy_df = tidy_df.rename(columns={"country": "Country"}).sort_values("Country")
-    front_cols = ["Country", "Sub_Region", "Population_0_14"]
+    front_cols = ["Country", "Sub_Region", "Population_0_4"]
     other_cols = [c for c in tidy_df.columns if c not in front_cols]
     tidy_df = tidy_df[front_cols + other_cols]
 
