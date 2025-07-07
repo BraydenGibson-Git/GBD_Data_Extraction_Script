@@ -50,5 +50,6 @@ python gbd_pipeline_final.py
 2. Use the built-in progress checkpoints for manual QA or pass the env var for CI.
 3. After significant analytic or structural changes, regenerate the data package and commit both code + new outputs.
 
----
+**Authors:** Harvey Koh, Brayden Gibson, Stella Talic
+
 © 2025 GBD Child-Health Research Project. MIT License. 

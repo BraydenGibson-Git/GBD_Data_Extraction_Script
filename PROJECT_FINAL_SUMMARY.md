@@ -82,4 +82,7 @@ All data were retrieved on **8 July 2025**.
 This approach preserves intra-regional heterogeneity and produces realistic proxy values, especially for risk factors correlated with child survival.
 
 ---
-**Lead Dev:** Cline (AI-assisted).  Licensed MIT + data-source licenses. 
+
+**Authors:** Harvey Koh, Brayden Gibson, Stella Talic
+
+© 2025 GBD Child-Health Research Project. MIT License. 
