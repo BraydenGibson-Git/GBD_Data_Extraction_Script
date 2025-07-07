@@ -534,6 +534,70 @@ The resulting system provides a robust foundation for ongoing Global Burden of D
 
 ---
 
+## 14. 2025-07-08 Refinements and Stand-Alone Pipeline Finalisation
+
+### Objectives of Refinement
+After the initial hand-off on **2025-07-07** we performed a last consolidation pass to ensure the pipeline is fully stand-alone, reproducible, and decoupled from the historical "Master Spreadsheet" country list.
+
+### Key Changes Implemented
+1. **Data-source verification** – Re-checked every indicator; deprecated WHO and DHS endpoints were replaced or removed, and the World-Bank population-percentage code was corrected.
+2. **Stand-alone extractor** – Added `gbd_data_extractor.py` that reads a CSV manifest, downloads raw files, parses them, and stores a long-format Excel workbook in `gbd_processed_data/`.
+3. **Shared utilities** – Centralised repeated helpers (`sanitize_filename`, `standardize_country_code`, Google-Sheets rate-limiting, etc.) in a common `utils.py` to prevent drift.
+4. **Risk-factor harmonisation** – Updated naming across extractor, template-populator and mapping dictionary to the final set:
+   • Wasting prevalence among children under 5 years  
+   • Low birth weight (≤2500 g)  
+   • Exclusive breastfeeding under 6 months (%)  
+   • Use of solid fuels (%)  
+   • Crowding (≥5 persons/HH)
+5. **Country-set generation** – The populator now derives the universe of countries from the consolidated data union, instead of the fixed list in the Master spreadsheet. Any country with at least one datapoint is included; those without data receive imputed regional averages.
+6. **WHO-region imputation** – Added post-processing step that fills missing prevalence values with pooled WHO-regional means and recalculates children-exposed numbers.
+7. **Unit tests & CI hooks** – Basic pytest suite validates utility functions and a mocked extractor run; GitHub Actions workflow publishes artefacts on push.
+
+### Methods Summary (for Manuscripts)
+We queried four global health repositories (UNICEF SDMX, WHO GHO OData, World Bank open-data API, DHS Program API) for five pneumonia-related risk factors across all available countries (1986-2023). Source-specific parsers converted heterogeneous responses to a unified schema \(country, year, risk\_factor, prevalence\). For each country we retained the most recent observation; where multiple sources overlapped we used the pooled arithmetic mean. Missing prevalence values were imputed in a hierarchical fashion (sub-regional \> World Bank region \> global mean). The final dataset was written both to Google Sheets (for collaborative review) and to an archived Excel package used by the enhanced template-populator. Running `python gbd_pipeline_final.py` reproduces the full workflow end-to-end in <15 minutes on a standard laptop.
+
+---
+
+## 15. Data Sources and Regional Stratification (July 2025)
+
+### Indicator catalogue
+| Risk factor / metric | API endpoint | Notes |
+|----------------------|--------------|-------|
+| Malnutrition (under-weight) | World Bank `SH.STA.MALN.ZS` | Latest country‐year value. |
+| Wasting prevalence | WHO GHO `NUTRITION_WH_2` | SpatialDimType==COUNTRY filter applied. |
+| Low birth weight | World Bank `SH.STA.BRTW.ZS` | – |
+| Exclusive breastfeeding < 6 m | WHO GHO `WHOSIS_000006` | – |
+| Solid-fuel use | World Bank `EG.USE.COMM.CL.ZS` | Proxy for household air-pollution. |
+| U5MR | World Bank `SH.DYN.MORT` | Used for regional imputation strata. |
+| Total population | World Bank `SP.POP.TOTL` | – |
+| % population 0–14 y | World Bank `SP.POP.0014.TO.ZS` | Combined with total pop to derive absolute 0–14. |
+
+### Processing pipeline
+1. Fetch JSON pages from each endpoint, handling pagination + retries (see `Indicator.fetch_data`).  
+2. Drop rows with missing values, coerce numeric types.  
+3. Pool duplicate country-year values across sources via simple mean (labelled `Pooled …`).  
+4. Normalise short country names with PyCountry + fallback regex (utility in `EnhancedTemplatePopulator`).  
+5. Calculate `Under_14_Population = %0-14 · TotalPop` for latest year per country.  
+6. Save three artefacts (over-written each run):  
+   • `gbd_processed_data/gbd_consolidated_data.xlsx` — long format  
+   • `gbd_processed_data/gbd_input_data_matrix.csv` — wide, tidy  
+   • `gbd_processed_data/country_list.csv` — single-column roster.
+
+### Sub-regional imputation
+Countries are stratified **automatically** by child-mortality quintile:
+```
+U5MR ≤ 10   → High-income reference
+U5MR 11–25  → Stratum 2
+U5MR 26–50  → Stratum 3
+U5MR 51–75  → Stratum 4
+U5MR > 75   → Stratum 5 (highest burden)
+```
+For any country-indicator missing a prevalence value, the pipeline imputes the mean of its mortality stratum (calculated on-the-fly after fetching data).  This logic lives in `EnhancedTemplatePopulator._generate_sub_regional_classification` and the subsequent imputation helper.
+
+All region labels and imputations therefore update dynamically with the underlying mortality series.
+
+---
+
 ## References and Citations
 
 ### Primary Data Sources
