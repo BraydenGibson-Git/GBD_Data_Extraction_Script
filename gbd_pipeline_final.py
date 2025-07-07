@@ -494,6 +494,9 @@ def run_complete_pipeline():
     consolidated_df.dropna(subset=['country', 'year', 'value'], inplace=True)
     consolidated_df['year'] = pd.to_numeric(consolidated_df['year']).astype(int)
     
+    # Ensure numeric values; coerce errors to NaN then drop
+    consolidated_df['value'] = pd.to_numeric(consolidated_df['value'], errors='coerce')
+
     # Pool data from duplicate sources
     consolidated_df = pool_duplicate_sources(consolidated_df)
 
