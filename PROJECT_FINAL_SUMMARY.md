@@ -49,5 +49,36 @@ Outputs:
 * Two micro-states (Cook Islands, Niue) lack population data; integrate UN-DESA pop table for full coverage.
 * Add CI to rerun monthly and open PR if any indicator changes.
 
+## Data sources & citations
+
+| Source | Endpoint / Product | Indicators Used | Access Method | Citation |
+|--------|--------------------|-----------------|---------------|----------|
+| World Bank HNP API | `/country/all/indicator/SH.STA.MALN.ZS` etc. | Malnutrition, Low birth weight, Solid fuel use, Total population, Population 0-14, U5MR | `requests` JSON pagination | World Bank. Health Nutrition and Population Statistics. https://data.worldbank.org |
+| WHO GHO OData | `https://ghoapi.azureedge.net/api/{code}` | Wasting prevalence, Exclusive breastfeeding | `requests` with OData `$format=json` | World Health Organization. Global Health Observatory. https://www.who.int/data/gho |
+| UN IGME (via WB) | Indirectly via WB U5MR series | Under-5 mortality rate (SDG 3.2.1) | Same as WB call above | United Nations Inter-agency Group for Child Mortality Estimation, 2024 |
+| Master template | Provided file `Master Spreadsheet (DO NOT CHANGE YET).xls` | Baseline countries + columns | `xlrd` | --- |
+
+All data were retrieved on **8 July 2025**.
+
+---
+
+## Mortality-based sub-regional stratification (imputation engine)
+
+1. **Source metric:** Latest available Under-5 Mortality Rate (U5MR) for each country (numeric per 1000 live births).
+2. **Region of reference:** Countries are first mapped to one of seven World Bank analytical regions using an extended alias dictionary.
+3. **Quartile thresholds:** For every WB region, the 25th (Q1) and 75th (Q3) percentiles of U5MR are computed.
+4. **Strata assignment:**
+   * Low child-mortality = U5MR < Q1
+   * Medium child-mortality = Q1 ≤ U5MR ≤ Q3
+   * High child-mortality = U5MR > Q3
+   The stratum label is concatenated with the region (e.g. `SSA - High Child Mortality`).
+5. **Imputation hierarchy:** When a country–indicator value is missing, the pipeline seeks (in order):
+   a. A direct country value (latest year).
+   b. The sub-regional mean for that indicator.
+   c. The WB regional mean.
+   d. Global mean.
+
+This approach preserves intra-regional heterogeneity and produces realistic proxy values, especially for risk factors correlated with child survival.
+
 ---
 **Lead Dev:** Cline (AI-assisted).  Licensed MIT + data-source licenses. 
