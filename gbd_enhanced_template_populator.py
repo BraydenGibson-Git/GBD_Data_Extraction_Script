@@ -47,12 +47,12 @@ class EnhancedTemplatePopulator:
         Returns a dictionary mapping country names (and alternatives) to their region.
         """
         regions = {
-            'SSA': ['Angola', 'Benin', 'Botswana', 'Burkina Faso', 'Burundi', 'Cameroon', 'Cape Verde', 'Central African Republic', 'Chad', 'Comoros', 'Congo, Dem. Rep.', 'Congo, Rep.', 'Cote d\'Ivoire', 'Equatorial Guinea', 'Eritrea', 'Eswatini', 'Ethiopia', 'Gabon', 'Gambia', 'Ghana', 'Guinea', 'Guinea-Bissau', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi', 'Mali', 'Mauritania', 'Mauritius', 'Mozambique', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sao Tome and Principe', 'Senegal', 'Seychelles', 'Sierra Leone', 'Somalia', 'South Africa', 'South Sudan', 'Sudan', 'Tanzania', 'Togo', 'Uganda', 'Zambia', 'Zimbabwe'],
+            'SSA': ['Angola', 'Benin', 'Botswana', 'Burkina Faso', 'Burundi', 'Cameroon', 'Cape Verde', 'Central African Republic', 'Chad', 'Comoros', 'Congo, Dem. Rep.', 'Congo Republic', 'Cote d\'Ivoire', 'Equatorial Guinea', 'Eritrea', 'Eswatini', 'Ethiopia', 'Gabon', 'Gambia', 'Ghana', 'Guinea', 'Guinea-Bissau', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi', 'Mali', 'Mauritania', 'Mauritius', 'Mozambique', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sao Tome and Principe', 'Senegal', 'Seychelles', 'Sierra Leone', 'Somalia', 'South Africa', 'South Sudan', 'Sudan', 'Tanzania', 'Togo', 'Uganda', 'Zambia', 'Zimbabwe'],
             'MENA': ['Algeria', 'Bahrain', 'Djibouti', 'Egypt', 'Iran', 'Iraq', 'Israel', 'Jordan', 'Kuwait', 'Lebanon', 'Libya', 'Malta', 'Morocco', 'Oman', 'Qatar', 'Saudi Arabia', 'Syria', 'Tunisia', 'United Arab Emirates', 'West Bank and Gaza', 'Yemen'],
             'EAP': ['Australia', 'Brunei', 'Cambodia', 'China', 'Fiji', 'Indonesia', 'Japan', 'Kiribati', 'Korea, Rep.', 'Lao PDR', 'Malaysia', 'Marshall Islands', 'Micronesia', 'Mongolia', 'Myanmar', 'Nauru', 'New Zealand', 'Palau', 'Papua New Guinea', 'Philippines', 'Samoa', 'Singapore', 'Solomon Islands', 'Thailand', 'Timor-Leste', 'Tonga', 'Tuvalu', 'Vanuatu', 'Vietnam'],
             'SA': ['Afghanistan', 'Bangladesh', 'Bhutan', 'India', 'Maldives', 'Nepal', 'Pakistan', 'Sri Lanka'],
             'ECA': ['Albania', 'Armenia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kazakhstan', 'Kosovo', 'Kyrgyz Republic', 'Latvia', 'Lithuania', 'Luxembourg', 'Moldova', 'Montenegro', 'Netherlands', 'North Macedonia', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Serbia', 'Slovak Republic', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Tajikistan', 'Turkey', 'Turkmenistan', 'Ukraine', 'United Kingdom', 'Uzbekistan'],
-            'LAC': ['Antigua and Barbuda', 'Argentina', 'Bahamas', 'Barbados', 'Belize', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Grenada', 'Guatemala', 'Guyana', 'Haiti', 'Honduras', 'Jamaica', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'St. Kitts and Nevis', 'St. Lucia', 'St. Vincent and the Grenadines', 'Suriname', 'Trinidad and Tobago', 'Uruguay', 'Venezuela'],
+            'LAC': ['Antigua and Barbuda', 'Argentina', 'The Bahamas', 'Barbados', 'Belize', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominica', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Grenada', 'Guatemala', 'Guyana', 'Haiti', 'Honduras', 'Jamaica', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'St. Kitts and Nevis', 'St. Lucia', 'St. Vincent and the Grenadines', 'Suriname', 'Trinidad and Tobago', 'Uruguay', 'Venezuela'],
             'NA': ['Canada', 'United States']
         }
         
@@ -62,7 +62,24 @@ class EnhancedTemplatePopulator:
                 country_to_region[country] = region
                 
         alternatives = {
-            'Congo, Dem. Rep.': ['Democratic Republic of the Congo', 'Congo DRC', 'DRC', 'Dem. Rep. of the Congo'], 'Congo, Rep.': ['Congo', 'Republic of the Congo'], 'Cote d\'Ivoire': ['Ivory Coast', 'Côte d\'Ivoire'], 'Iran': ['Iran (Islamic Republic of)'], 'Korea, Rep.': ['South Korea', 'Republic of Korea'], 'Lao PDR': ['Laos', 'Lao People\'s Dem. Republic'], 'Russian Federation': ['Russia'], 'United States': ['United States of America', 'USA'], 'United Kingdom': ['UK'], 'Vietnam': ['Viet Nam'], 'Syria': ['Syrian Arab Republic'], 'Libya': ['Libyan Arab Jamahiriya'], 'Tanzania': ['United Republic of Tanzania'], 'Eswatini': ['Swaziland'], 'Timor-Leste': ['Timor Leste']
+            'Congo, Dem. Rep.': ['Democratic Republic of the Congo', 'Congo DRC', 'DRC', 'Dem. Rep. of the Congo'], 
+            'Congo Republic': ['Congo, Rep.', 'Congo', 'Republic of the Congo'], 
+            'Cote d\'Ivoire': ['Ivory Coast', 'Côte d\'Ivoire'], 
+            'Iran': ['Iran (Islamic Republic of)'], 
+            'Korea, Rep.': ['South Korea', 'Republic of Korea'], 
+            'Lao PDR': ['Laos', 'Lao People\'s Dem. Republic'], 
+            'Russian Federation': ['Russia'], 
+            'United States': ['United States of America', 'USA'], 
+            'United Kingdom': ['UK'], 
+            'Vietnam': ['Viet Nam', 'vietnam', 'viet nam'], 
+            'Gambia': ['gambia', 'the gambia', 'The Gambia'], 
+            'The Bahamas': ['Bahamas', 'bahamas', 'the bahamas'], 
+            'Yemen': ['Yemen Republic', 'yemen republic', 'yemen'], 
+            'Syria': ['Syrian Arab Republic'], 
+            'Libya': ['Libyan Arab Jamahiriya'], 
+            'Tanzania': ['United Republic of Tanzania'], 
+            'Eswatini': ['Swaziland'], 
+            'Timor-Leste': ['Timor Leste']
         }
         
         for main_name, alt_names in alternatives.items():
@@ -175,13 +192,13 @@ class EnhancedTemplatePopulator:
         pop_dict = population_df.set_index('country')['under_5_population'].to_dict()
 
         risk_factor_mapping = {
-            'Malnutrition (wght-for-age z<-2)': 'Malnutrition',
-            'Wasting prevalence among children under 5 years': 'Wasting',
-            'Low birth weight (=<2500 g)': 'Low_Birth_Weight',
-            'Exclusive breastfeeding under 6 months (%)': 'Exclusive_Breastfeeding',
-            'Use solid fuels (yes)': 'Solid_Fuels',
-            'Urban slum population (% of urban)': 'Crowding',
-            'Child Mortality Rate (U5MR)': 'U5MR'
+            'Malnutrition (wght-for-age z<-2)': 'Malnutrition (%)',
+            'Wasting prevalence among children under 5 years': 'Wasting (%)',
+            'Low birth weight (=<2500 g)': 'Low_Birth_Weight (%)',
+            'Exclusive breastfeeding under 6 months (%)': 'Exclusive_Breastfeeding (%)',
+            'Use solid fuels (yes)': 'Solid_Fuels (%)',
+            'Urban slum population (% of urban)': 'Crowding (%)',
+            'Child Mortality Rate (U5MR)': 'U5MR (per 1,000 live births)'
         }
         
         print(f"    Population data ready for {len(pop_dict)} countries.")
@@ -198,7 +215,7 @@ class EnhancedTemplatePopulator:
             original_pop = row.get('U5_Population', np.nan) 
             new_pop = pop_dict.get(country_name, original_pop)
 
-            row_data = {'Country': country_name, 'Sub_Region': sub_region, 'Population_0_4': new_pop}
+            row_data = {'Country': country_name, 'Sub_Region': sub_region, 'Population_0_4 (count)': new_pop}
             
             for gbd_risk_factor, clean_name in risk_factor_mapping.items():
                 result = self._get_imputation_value(country_name, gbd_risk_factor, gbd_data)
@@ -223,6 +240,10 @@ class EnhancedTemplatePopulator:
         input_df[value_cols] = input_df[value_cols].fillna('')
 
         print(f"   ✅ Processed {len(input_df)} countries into final format (no NaNs).")
+
+        # Sort countries alphabetically
+        input_df = input_df.sort_values('Country').reset_index(drop=True)
+        print(f"   📝 Countries sorted alphabetically.")
 
         output_file = 'GBD_Input_Data_Package.xlsx'
         print(f"\n💾 Creating new data package workbook '{output_file}'…")
