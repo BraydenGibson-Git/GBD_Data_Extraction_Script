@@ -124,15 +124,6 @@ This tool is perfect for:
 - **NGOs** tracking progress on child health indicators
 - **Government agencies** benchmarking national performance
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to:
-
-- Report bugs or suggest improvements
-- Add support for new data sources
-- Enhance data processing algorithms
-- Improve documentation
-
 ## 📄 License
 
 This project is open source and available under the MIT License.
@@ -145,8 +136,3 @@ If you encounter any issues:
 2. Review the error logs generated during execution
 3. Open an issue on GitHub with details about your problem
 
----
-
-**Happy data extracting! 🚀**
-
-*Built with ❤️ for the global health research community*
