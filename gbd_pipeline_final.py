@@ -440,32 +440,34 @@ def run_complete_pipeline():
     # --- Progress checkpoint #1 ---
     progress_checkpoint("DHS country list fetched")
 
-    # Define all indicators to be fetched
+    # Define all indicators to be fetched - HERE YOU CAN CHANGE INDICATOR CODE AND TITLE FOR WHICHEVER DATASET YOU REQUIRE FOR THE UNDER 5 CHILD MORTALITY STUDIES
+    # Use the following structure XXXXXIndicator('INDICATOR_CODE', 'TITLE FOR INDICATOR ')
+    
     indicators = [
-        # --- Malnutrition ---
+        # --- Malnutrition --- ALTER INDICATORS HERE
         WorldBankIndicator('SH.STA.MALN.ZS', 'Malnutrition (wght-for-age z<-2)'),
         WHOIndicator('NUTRITION_WH_2', 'Wasting prevalence among children under 5 years'),
         # Removed DHS indicators due to lack of available data in the DHS API as of July 2025.
 
-        # --- Low Birth Weight ---
+        # --- Low Birth Weight --- ALTER INDICATORS HERE
         WorldBankIndicator('SH.STA.BRTW.ZS', 'Low birth weight (=<2500 g)'),
         # Removed DHS indicators due to lack of available data in the DHS API as of July 2025.
 
-        # --- Breastfeeding ---
+        # --- Breastfeeding --- ALTER INDICATORS HERE
         WHOIndicator('WHOSIS_000006', 'Exclusive breastfeeding under 6 months (%)'),
 
-        # --- Household Environment ---
+        # --- Household Environment --- ALTER INDICATORS HERE
         WorldBankIndicator('EG.USE.COMM.CL.ZS', 'Use solid fuels (yes)'),
         # Removed DHS indicators due to lack of available data in the DHS API as of July 2025.
         
-        # --- Child Mortality (for stratification) ---
+        # --- Child Mortality (for stratification) --- ALTER INDICATORS HERE
         WorldBankIndicator('SH.DYN.MORT', 'Child Mortality Rate (U5MR)'),
 
-        # --- Crowding & Housing ---
+        # --- Crowding & Housing --- ALTER INDICATORS HERE
         UNHabitatIndicator(),
         WorldBankIndicator('EN.POP.SLUM.UR.ZS', 'Urban slum population (% of urban)'),
 
-        # --- Population Data (absolute counts 0-4) ---
+        # --- Population Data (absolute counts 0-4) --- POPULATION DO NOT ALTER
         UNICEFUnder5PopIndicator(),
     ]
 
